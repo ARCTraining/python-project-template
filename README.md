@@ -8,6 +8,10 @@ The contents of this ReadMe are replicated on the [wiki here](https://github.com
 
 GitHub action workflows are provided in the folder `Example workflows`; these will need to be moved to a `.github/workflows` directory to be used, and will need to be updated to match your Python package name.
 
+## Authors
+
+- [Dr Maeve Murphy Quinlan](https://github.com/murphyqm)
+
 ## Launch in codespaces
 
 This repository contains a `devcontainer.json` file, which includes details to set up a cloud virtual machine in GitHub codespaces.
