@@ -1,5 +1,7 @@
 # The Ultimate Python Project Template
 
+[![DOI](https://zenodo.org/badge/824644581.svg)](https://doi.org/10.5281/zenodo.13882371)
+
 You can create your own version of this repository by clicking the `Use Template` option.
 
 You can set the name of your new repository to your Python project name. See [our webapp](https://package-your-python.streamlit.app/) for details on choosing a package and project name.
@@ -18,6 +20,12 @@ This repository contains a `devcontainer.json` file, which includes details to s
 
 Once you launch the codespace from your repository (it will take a while to set up), you will have a view that matches the app VSCode, including a terminal
 window at the bottom of the screen, which allows you to interact with the virtual machine.
+
+Once it has launched, run:
+
+`source "${HOME}/conda/etc/profile.d/conda.sh"`
+
+from the terminal to get `conda` up and running.
 
 If you use `pwd` to check the working directory, you will get `/workspaces/YOUR-REPO-NAME`: you are positioned inside the git repository folder. This is essentially
 a local clone of the repository on a virtual machine; you will have to use git as your would on your desktop (such as pushing changes to `origin BRANCH-NAME` from the terminal).
@@ -65,9 +73,21 @@ We will use git and a GitHUb remote to track our changes. You can use git in the
 git status # check on status of current git repo
 git branch NAME # create a branch called NAME
 git checkout NAME # swap over to the branch called NAME
-git add . # stage all changed files for commit, you can replace "." with FILE to add a single file called FILE
+git add NAME # stage FILE for commit
 git commit # commit the staged files (this will open your text editor to create a commit message)
 git push origin NAME # push local commits to the remote branch tracking the branch NAME
+
+# Added something unintentional?
+git reset --soft HEAD^ # undo a git commit
+git reset # undo git add
+git restore --staged FILE # undo git add to specific file
+git restore FILE # undo all changes to an unstaged file since last commit
+
+# after merging a pull request
+git fetch -p  # delete branches that no longer exist in the remote
+
+# go back to an old version and put it on a branch
+git checkout -b NEW-BRANCH-NAME-FOR-OLD-VERSION git-hash-here
 ```
 
 ## Essential conda commands
@@ -99,6 +119,39 @@ sys.path.append("src")
 ```
 
 You can then run `pytest` from the main repo directory.
+
+## Essential Jupytext hints
+
+Create a conda env with Jupyter and Jupytext installed:
+
+```
+conda env create --file .devcontainer/env-files/jup-env.yml
+```
+
+Ensure you have the Jupyter extension installed.
+
+To "pair" a notebook (e.g. create a `.py` plaintext version that can be version controlled), use the Jupytext CLI:
+
+```
+jupytext --set-formats ipynb,py:percent notebook.ipynb
+```
+
+Now you can add `.ipynb` files to your `.gitignore` and only track the `.py` version.
+
+You can sync these notebooks:
+```
+jupytext --sync notebook.ipynb
+```
+
+If you download the code to another machine (`git clone` the repository), you should only have the `.py` files.
+
+You can get `jupytext` to generate the notebook output:
+
+```
+jupytext --sync notebook.py
+```
+
+You can also just work form the `jupytext` Python file (the Juptyer VSCode extension will allow sections of it to run as a notebook).
 
 ## Essential GitHub action hints
 
